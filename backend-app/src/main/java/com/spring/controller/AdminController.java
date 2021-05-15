@@ -34,7 +34,7 @@ import com.spring.response.ServerResponse;
 import com.spring.response.ViewOrderResponse;
 import com.spring.util.Validator;
 
-@CrossOrigin(origins = WebConstants.ALLOWED_URL)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin")
 public class AdminController {

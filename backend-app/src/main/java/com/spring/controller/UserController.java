@@ -55,7 +55,7 @@ import com.spring.util.Validator;
 
 import javax.annotation.PostConstruct;
 
-@CrossOrigin(origins = WebConstants.ALLOWED_URL)
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
