@@ -1,0 +1,43 @@
+<app-navigation></app-navigation>
+<script>
+
+</script>
+<div class="container ">
+    <br>
+    <div class="row">
+        <div class="offset-2 col-6 ">
+            <form class="form-horizontal shadow p-3 mb-5 bg-white rounded" #f="ngForm" (ngSubmit)="changePassword()">
+                <div class="form-group">
+                    <label class="control-label col-m-10" for="cp">Change Password: </label>
+                    <div class="col-m-10">
+                        <input type="text" class="form-control" name="oldPassword" [(ngModel)]="model.oldPassword"
+                            placeholder="Old Password" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-m-10" for="city">City: </label>
+                    <div class="col-m-10">
+                        <input type="text" class="form-control" name="newPassword" [(ngModel)]="model.newPassword"
+                            placeholder="New Password" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-m-10" for="state">State: </label>
+                    <div class="col-m-10">
+                        <input type="password" class="form-control" name="rnewPassword" [(ngModel)]="model.rnewPassword"
+                            placeholder="Retype New Password" />
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <div class="col-m-offset-2 col-m-4">
+                        <button type="submit" class="btn  btn-primary" name="cp">
+                            Change Password
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

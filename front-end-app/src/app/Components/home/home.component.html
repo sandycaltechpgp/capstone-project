@@ -1,0 +1,14 @@
+<app-navigation></app-navigation>
+<div class="container">
+  <div class="form-group">
+    <label>Search Items:::</label>
+    <input type="text" class="form-control" name="title" id="search">
+    <button class="btn btn-info btn-sm" (click)="getSearchResults()">Search Item</button>
+  </div>
+
+  <div class="row">
+    <div class="col-3 align-left" *ngFor="let product of products">
+      <app-product [product]="product" (productAddToCart)="addToCart($event)">Loading...</app-product>
+    </div>
+  </div>
+</div>
