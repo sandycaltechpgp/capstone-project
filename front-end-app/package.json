@@ -20,22 +20,22 @@
     "@angular/platform-browser": "^6.0.3",
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
+    "@ng-bootstrap/ng-bootstrap": "^4",
     "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
+    "adm-zip": ">=0.4.11",
     "angular-webstorage-service": "^1.0.2",
     "bootstrap": ">=4.3.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
-    "rxjs": "^6.0.0",
-    "zone.js": "^0.8.26",
-    "lodash": ">=4.17.13",
-    "lodash.mergewith": ">=4.6.2",
     "handlebars": ">=4.1.0",
     "js-yaml": ">=3.13.1",
-    "ws": ">=3.3.1",
+    "lodash": ">=4.17.13",
+    "lodash.mergewith": ">=4.6.2",
+    "rxjs": "^6.0.0",
     "tar": ">=2.2.2",
     "webpack-dev-server": ">=3.1.11",
-    "adm-zip": ">=0.4.11",
-    "@ng-bootstrap/ng-bootstrap": "^2.0.0-alpha.0"
+    "ws": ">=3.3.1",
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.8",
@@ -57,5 +57,21 @@
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
     "typescript": "^3.4.5"
+  },
+  "production": {
+    "fileReplacements": [
+      {
+        "replace": "src/environments/environment.ts",
+        "with": "src/environments/environment.prod.ts"
+      }
+    ]
+  },
+  "qa": {
+    "fileReplacements": [
+      {
+        "replace": "src/environments/environment.ts",
+        "with": "src/environments/environment.qa.ts"
+      }
+    ]
   }
 }
