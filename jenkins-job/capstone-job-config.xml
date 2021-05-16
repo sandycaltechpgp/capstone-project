@@ -1,0 +1,96 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<maven2-moduleset plugin="maven-plugin@3.10">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <rootModule>
+    <groupId>com.springboot</groupId>
+    <artifactId>foody</artifactId>
+  </rootModule>
+  <rootPOM>/var/lib/jenkins/workspace/capstone-project/capstone-project/backend-app/pom.xml</rootPOM>
+  <goals>clean install -DskipTests</goals>
+  <mavenName>MavenInstall</mavenName>
+  <aggregatorStyleBuild>true</aggregatorStyleBuild>
+  <incrementalBuild>false</incrementalBuild>
+  <ignoreUpstremChanges>false</ignoreUpstremChanges>
+  <ignoreUnsuccessfulUpstreams>false</ignoreUnsuccessfulUpstreams>
+  <archivingDisabled>false</archivingDisabled>
+  <siteArchivingDisabled>false</siteArchivingDisabled>
+  <fingerprintingDisabled>false</fingerprintingDisabled>
+  <resolveDependencies>false</resolveDependencies>
+  <processPlugins>false</processPlugins>
+  <mavenValidationLevel>-1</mavenValidationLevel>
+  <runHeadless>false</runHeadless>
+  <disableTriggerDownstreamProjects>false</disableTriggerDownstreamProjects>
+  <blockTriggerWhenBuilding>true</blockTriggerWhenBuilding>
+  <settings class="jenkins.mvn.FilePathSettingsProvider">
+    <path></path>
+  </settings>
+  <globalSettings class="jenkins.mvn.FilePathGlobalSettingsProvider">
+    <path></path>
+  </globalSettings>
+  <reporters/>
+  <publishers/>
+  <buildWrappers>
+    <jenkins.plugins.nodejs.NodeJSBuildWrapper plugin="nodejs@1.4.0">
+      <nodeJSInstallationName>NodeINstall</nodeJSInstallationName>
+      <cacheLocationStrategy class="jenkins.plugins.nodejs.cache.DefaultCacheLocationLocator"/>
+    </jenkins.plugins.nodejs.NodeJSBuildWrapper>
+  </buildWrappers>
+  <prebuilders>
+    <hudson.tasks.Shell>
+      <command>sudo rm -rf capstone-project 
+
+git clone https://github.com/sandycaltechpgp/capstone-project.git
+
+cd /var/lib/jenkins/workspace/capstone-project/capstone-project/backend-app</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+  </prebuilders>
+  <postbuilders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash -x
+
+mvn --version 
+npm --version
+
+sudo kill -9 `ps ax | grep &apos;java&apos; | grep &apos;foody&apos; | awk &apos;{print $1}&apos;`
+
+sudo kill -9 `ps ax | grep &apos;nginx&apos; | awk &apos;{print $1}&apos;`
+
+cd /var/lib/jenkins/workspace/capstone-project/capstone-project/front-end-app
+
+##sudo rm -rf dist/shopping-app
+
+##ng build --prod
+</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>cd /var/lib/jenkins/workspace/capstone-project/capstone-project/backend-app
+
+BUILD_ID=dontKillMe nohup /etc/alternatives/java -jar -Xmx600m -Xms500m -Dspring.profiles.active=prodmysql /var/lib/jenkins/workspace/capstone-project/capstone-project/backend-app/target/foody-0.0.1-SNAPSHOT.jar &amp;
+
+sudo rm -rf /srv/mysite/*
+
+sudo cp -R /var/lib/jenkins/workspace/capstone-project/capstone-project/front-end-app/dist/shopping-app/* /srv/mysite/
+
+sudo nginx</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+  </postbuilders>
+  <runPostStepsIfResult>
+    <name>FAILURE</name>
+    <ordinal>2</ordinal>
+    <color>RED</color>
+    <completeBuild>true</completeBuild>
+  </runPostStepsIfResult>
+</maven2-moduleset>

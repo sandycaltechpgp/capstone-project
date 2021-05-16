@@ -1,0 +1,12 @@
+
+PLEASE READ THE BELOW INSTRUCTIONS:
+
+use the below command to import the jenkins job:::
+
+sandeepjakkaraju@Sandeeps-MBP jenkins-job % java -jar jenkins-cli.jar -auth admin:admin -s http://ec2-3-137-179-23.us-east-2.compute.amazonaws.com:8080/ create-job < capstone-job-config.xml capstone-project
+
+
+HAPPY JENKINS !!!
+
+
+
