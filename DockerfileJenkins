@@ -16,28 +16,26 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
   && apt-get install -y nodejs 
 
 
+COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/backend-app/target/*.jar /usr/local/lib/demo.jar
 
-
-COPY backend-app/target/*.jar /usr/local/lib/demo.jar
-
-COPY backend-app/ /home/be
+COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/backend-app/ /home/be
 
 WORKDIR /home/be/
 RUN mvn clean install -DskipTests
 
-COPY front-end-app /home/fe/
+COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/front-end-app /home/fe/
 
 
 WORKDIR /home/fe
 RUN npm install
 RUN npm run ng build -- --prod --configuration=docker  --verbose --progress=true
 
-COPY front-end-app/dist/shopping-app/  /usr/share/nginx/html/
+COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/front-end-app/dist/shopping-app/  /usr/share/nginx/html/
 
 RUN rm -v /etc/nginx/nginx.conf
 
 # Copy a configuration file from the current directory
-ADD nginx.conf /etc/nginx/
+ADD /var/lib/jenkins/workspace/CapstoneProject/capstone-project/nginx.conf /etc/nginx/
 
 
 # Append "daemon off;" to the beginning of the configuration
@@ -45,7 +43,7 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # Set the default command to execute
 # when creating a new container
-CMD service nginx start
+RUN nginx
 
 
 EXPOSE 8087
