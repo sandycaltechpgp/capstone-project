@@ -73,5 +73,10 @@
         "with": "src/environments/environment.qa.ts"
       }
     ]
+  },
+  "scripts": {
+    "build": "npm run ng build --prod",
+    "ng": "ng",
+    "npm": "npm"
   }
 }
