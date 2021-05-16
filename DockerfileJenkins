@@ -16,12 +16,15 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
   && apt-get install -y nodejs 
 
 
-COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/backend-app/target/*.jar /usr/local/lib/demo.jar
+
 
 COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/backend-app/ /home/be
 
 WORKDIR /home/be/
+
 RUN mvn clean install -DskipTests
+
+COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/backend-app/target/*.jar /usr/local/lib/demo.jar
 
 COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/front-end-app /home/fe/
 
