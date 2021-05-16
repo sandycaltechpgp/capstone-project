@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  baseUrl:"http://ec2-3-129-73-177.us-east-2.compute.amazonaws.com:8087",
+  baseUrl:"http://ec2-18-116-24-173.us-east-2.compute.amazonaws.com:8087",
   signupUrl : "/home/signup",
   loginUrl : "/home/auth",
   addToCartUrl : "/user/addToCart",
