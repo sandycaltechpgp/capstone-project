@@ -23,9 +23,9 @@ WORKDIR /home/be/
 
 RUN mvn clean install -DskipTests
 
-COPY /home/be/backend-app/target/*.jar /usr/local/lib/demo.jar
+RUN cp /home/be/backend-app/target/*.jar /usr/local/lib/demo.jar
 
-COPY capstone-project/front-end-app /home/fe/
+RUN cp -R capstone-project/front-end-app /home/fe/
 
 
 WORKDIR /home/fe
