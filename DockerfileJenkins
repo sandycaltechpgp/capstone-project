@@ -44,7 +44,7 @@ ADD /var/lib/jenkins/workspace/CapstoneProject/capstone-project/nginx.conf /etc/
 
 # Set the default command to execute
 # when creating a new container
-RUN nginx
+#RUN nginx
 
 
 EXPOSE 8087
@@ -52,4 +52,5 @@ EXPOSE 80
 
 
 WORKDIR /usr/local/lib
-CMD ["java", "-jar","-Dspring.profiles.active=devh2","/usr/local/lib/demo.jar"]
+#CMD ["java", "-jar","-Dspring.profiles.active=devh2","/usr/local/lib/demo.jar"]
+ENTRYPOINT sh -c 'service nginx start && java -jar -Dspring.profiles.active=devh2 /usr/local/lib/demo.jar'

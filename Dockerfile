@@ -30,9 +30,9 @@ COPY front-end-app /home/fe/
 
 WORKDIR /home/fe
 RUN npm install
-RUN npm run ng build -- --prod --verbose --progress=true
+RUN npm run ng build  --verbose --progress=true
 
-RUN cp -R /home/fe/dist/shopping-app/  /usr/share/nginx/html/
+RUN cp -R /home/fe/dist/shopping-app/*  /usr/share/nginx/html/
 
 RUN rm -v /etc/nginx/nginx.conf
 
@@ -45,12 +45,11 @@ ADD nginx.conf /etc/nginx/
 
 # Set the default command to execute
 # when creating a new container
-RUN nginx
+#RUN service nginx start
+#CMD ["nginx", "-g", "daemon off;"]
 
-
-EXPOSE 8087
-EXPOSE 80
-
+EXPOSE 80 8087
 
 WORKDIR /usr/local/lib
-CMD ["java", "-jar","-Dspring.profiles.active=devh2","/usr/local/lib/demo.jar"]
+#ENTRYPOINT ["java", "-jar","-Dspring.profiles.active=devh2","/usr/local/lib/demo.jar"]
+ENTRYPOINT sh -c 'service nginx start && java -jar -Dspring.profiles.active=devh2 /usr/local/lib/demo.jar'
