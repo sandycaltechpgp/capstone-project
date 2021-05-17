@@ -25,6 +25,7 @@ User Portal Features:
 ======================================================================================================================================================
 
 USING DOCKER TO RUN THE APP ON LOCALHOST:
+##### NOTE: NEEDS DOCKER SERVER RUNNING ON THE HOST #####
 
 BUILD THE DOCKER IMAGE WITH BELOW COMMAND:
 $ docker build . -t foody:latest
