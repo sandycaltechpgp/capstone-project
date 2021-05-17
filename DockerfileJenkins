@@ -36,7 +36,7 @@ WORKDIR /home/fe
 RUN npm install
 RUN npm run ng build --configuration=docker  --verbose --progress=true
 
-RUN cp /home/fe/dist/shopping-app/  /usr/share/nginx/html/
+RUN cp /home/fe/dist/shopping-app/*  /usr/share/nginx/html/
 
 
 EXPOSE 80 8087
