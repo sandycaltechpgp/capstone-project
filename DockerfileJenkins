@@ -15,16 +15,17 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
   && apt-get install -y nodejs 
 
+git clone https://github.com/sandycaltechpgp/capstone-project.git
 
-COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/backend-app/ /home/be
+COPY capstone-project/backend-app/ /home/be
 
 WORKDIR /home/be/
 
 RUN mvn clean install -DskipTests
 
-COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/backend-app/target/*.jar /usr/local/lib/demo.jar
+COPY /home/be/backend-app/target/*.jar /usr/local/lib/demo.jar
 
-COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/front-end-app /home/fe/
+COPY capstone-project/front-end-app /home/fe/
 
 
 WORKDIR /home/fe
@@ -36,15 +37,7 @@ RUN cp -R  /home/fe/dist/shopping-app/  /usr/share/nginx/html/
 RUN rm -v /etc/nginx/nginx.conf
 
 # Copy a configuration file from the current directory
-ADD /var/lib/jenkins/workspace/CapstoneProject/capstone-project/nginx.conf /etc/nginx/
-
-
-# Append "daemon off;" to the beginning of the configuration
-#RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-
-# Set the default command to execute
-# when creating a new container
-#RUN nginx
+ADD capstone-project/nginx.conf /etc/nginx/
 
 
 EXPOSE 8087
@@ -52,5 +45,4 @@ EXPOSE 80
 
 
 WORKDIR /usr/local/lib
-#CMD ["java", "-jar","-Dspring.profiles.active=devh2","/usr/local/lib/demo.jar"]
 ENTRYPOINT sh -c 'service nginx start && java -jar -Dspring.profiles.active=devh2 /usr/local/lib/demo.jar'
