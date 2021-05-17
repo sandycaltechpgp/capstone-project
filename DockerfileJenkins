@@ -16,8 +16,6 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
   && apt-get install -y nodejs 
 
 
-
-
 COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/backend-app/ /home/be
 
 WORKDIR /home/be/
@@ -33,7 +31,7 @@ WORKDIR /home/fe
 RUN npm install
 RUN npm run ng build -- --prod --configuration=docker  --verbose --progress=true
 
-COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/front-end-app/dist/shopping-app/  /usr/share/nginx/html/
+RUN cp -R  /home/fe/dist/shopping-app/  /usr/share/nginx/html/
 
 RUN rm -v /etc/nginx/nginx.conf
 
@@ -42,7 +40,7 @@ ADD /var/lib/jenkins/workspace/CapstoneProject/capstone-project/nginx.conf /etc/
 
 
 # Append "daemon off;" to the beginning of the configuration
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+#RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # Set the default command to execute
 # when creating a new container

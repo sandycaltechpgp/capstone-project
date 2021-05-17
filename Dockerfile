@@ -30,9 +30,9 @@ COPY front-end-app /home/fe/
 
 WORKDIR /home/fe
 RUN npm install
-RUN npm run ng build -- --prod  --verbose --progress=true
+RUN npm run ng build -- --prod --verbose --progress=true
 
-COPY front-end-app/dist/shopping-app/  /usr/share/nginx/html/
+RUN cp -R /home/fe/dist/shopping-app/  /usr/share/nginx/html/
 
 RUN rm -v /etc/nginx/nginx.conf
 
@@ -41,7 +41,7 @@ ADD nginx.conf /etc/nginx/
 
 
 # Append "daemon off;" to the beginning of the configuration
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+#RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # Set the default command to execute
 # when creating a new container
