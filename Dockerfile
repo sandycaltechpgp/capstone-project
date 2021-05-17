@@ -18,12 +18,13 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
 
 
 
-COPY backend-app/target/*.jar /usr/local/lib/demo.jar
 
 COPY backend-app/ /home/be
 
 WORKDIR /home/be/
 RUN mvn clean install -DskipTests
+
+RUN cp -R /home/be/target/*.jar /usr/local/lib/demo.jar
 
 COPY front-end-app /home/fe/
 
