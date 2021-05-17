@@ -19,14 +19,13 @@ RUN rm -rf capstone-project
 RUN git clone https://github.com/sandycaltechpgp/capstone-project.git
 
 RUN cp -R capstone-project/backend-app /home/be
+RUN cp -R capstone-project/front-end-app /home/fe
 
 WORKDIR /home/be/
 
 RUN mvn clean install -DskipTests
 
 RUN cp -R /home/be/target/*.jar /usr/local/lib/demo.jar
-
-RUN cp -R capstone-project/front-end-app /home/fe
 
 
 WORKDIR /home/fe
