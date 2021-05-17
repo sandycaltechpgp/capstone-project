@@ -30,7 +30,7 @@ RUN cp -R /home/be/target/*.jar /usr/local/lib/demo.jar
 
 WORKDIR /home/fe
 RUN npm install
-RUN npm run ng build -- --prod --configuration=docker  --verbose --progress=true
+RUN npm run ng build --configuration=docker  --verbose --progress=true
 
 RUN cp -R  /home/fe/dist/shopping-app/  /usr/share/nginx/html/
 
