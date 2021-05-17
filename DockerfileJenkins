@@ -15,8 +15,10 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
   && apt-get install -y nodejs 
 
+RUN rm -rf capstone-project
+RUN git clone https://github.com/sandycaltechpgp/capstone-project.git
 
-COPY /var/lib/jenkins/workspace/CapstoneProject/capstone-project/backend-app /home/be
+RUN cp -R capstone-project/backend-app /home/be
 
 WORKDIR /home/be/
 
@@ -24,7 +26,7 @@ RUN mvn clean install -DskipTests
 
 RUN cp /home/be/backend-app/target/*.jar /usr/local/lib/demo.jar
 
-RUN cp -R /var/lib/jenkins/workspace/CapstoneProject/capstone-project/front-end-app /home/fe
+RUN cp -R capstone-project/front-end-app /home/fe
 
 
 WORKDIR /home/fe
@@ -36,7 +38,7 @@ RUN cp -R  /home/fe/dist/shopping-app/  /usr/share/nginx/html/
 RUN rm -v /etc/nginx/nginx.conf
 
 # Copy a configuration file from the current directory
-ADD /var/lib/jenkins/workspace/CapstoneProject/capstone-project/nginx.conf /etc/nginx/
+ADD capstone-project/nginx.conf /etc/nginx/
 
 
 EXPOSE 8087
