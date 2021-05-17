@@ -22,5 +22,25 @@ User Portal Features:
 5. Add selected items to cart and customise order.
 6. Pay for the order and receive an order summary.
 
+======================================================================================================================================================
 
+USING DOCKER TO RUN THE APP ON LOCALHOST:
+
+BUILD THE DOCKER IMAGE WITH BELOW COMMAND:
+$ docker build . -t foody:latest
+
+RUN THE DOCKER IMAGE ON LOCALHOST
+
+$ docker run -p80:80 -p8087:8087 foody:latest
+
+ACCESS THE APP AT BELOW URL IN BROWSER:
+
+URL: http://localhost/
+
+======================================================================================================================================================
+
+RUN THE APP ON LOCALHOST WITH BASH COMMANDS: (MAC/LINUX)
+
+
+======================================================================================================================================================
 
