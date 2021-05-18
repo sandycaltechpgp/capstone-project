@@ -1,0 +1,5 @@
+catid, catname, catdescription
+1, Mughlai, Mughlai
+2, North India, North Indian
+3, South India, South Indian
+4, Chinese, Chinese

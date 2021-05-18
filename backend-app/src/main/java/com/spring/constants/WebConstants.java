@@ -15,6 +15,7 @@ public class WebConstants {
 	public static final String PROD_PRICE = "price";
 	public static final String PROD_QUANITY = "quantity";
 	public static final String PROD_ID = "productId";
+	public static final String CATEGORY ="catid";
 
 	public static final String ORD_STATUS = "orderStatus";
 	public static final String ORD_ID = "orderId";

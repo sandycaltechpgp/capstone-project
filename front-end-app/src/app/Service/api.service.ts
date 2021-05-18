@@ -84,7 +84,20 @@ export class ApiService {
     return this.http.get<any>(environment.baseUrl+environment.productsUrl);
   }
 
-   // Fetching all the search products
+
+  // Fetching all the products cats
+  getProductsCats(): Observable<any> {
+    return this.http.get<any>(environment.baseUrl+environment.productsCatUrl);
+  }
+
+  getSearchCategories(value): Observable<any> {
+    return this.http.get<any>(environment.baseUrl+environment.productsCatSearchUrl+"?search="+value);
+  }
+
+
+
+
+  // Fetching all the search products
    getSearchProducts(s:String): Observable<any> {
     return this.http.get<any>(environment.baseUrl+environment.sproductsUrl+'?search='+s);
   }

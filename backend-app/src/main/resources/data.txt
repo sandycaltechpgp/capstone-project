@@ -1,9 +1,9 @@
-productid,description,productname,price,quantity,productimage
-1,dosa,dosa,10.0,200,Item1.jpeg
-2,chicken curry,chickencurry,100.00,300,ccurry.jpeg
-3,chicken tikka,chickentikka,200.0,200,ctikka.jpeg
-4,fish,fish fry,400.00,400,fish.jpeg
-5,Jalferize,jalferize,567.98,90,jalferi.jpeg
-6,mutton,mutton curry,455.98,78,mutton.jpeg
-7,naan,naan,40.0,500,nan.jpeg
-8,veg thali,veg thali,500.00,500,vegthali.jpeg
+productid,description,productname,price,quantity,productimage,catid
+1,dosa,dosa,10.0,200,Item1.jpeg,3
+2,chicken curry,chickencurry,100.00,300,ccurry.jpeg,1
+3,chicken tikka,chickentikka,200.0,200,ctikka.jpeg,1
+4,fish,fish fry,400.00,400,fish.jpeg,1
+5,Jalferize,jalferize,567.98,90,jalferi.jpeg,4
+6,mutton,mutton curry,455.98,78,mutton.jpeg,1
+7,naan,naan,40.0,500,nan.jpeg,2
+8,veg thali,veg thali,500.00,500,vegthali.jpeg,2

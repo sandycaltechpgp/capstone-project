@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
 import { AppComponent } from './app.component';
 import {StorageServiceModule} from 'angular-webstorage-service';
 import {Router, Routes, RouterModule} from '@angular/router';
@@ -20,7 +19,7 @@ import { AddressComponent } from './Components/home/address/address.component';
 import { EditItemComponent } from './Components/admin/edit-item/edit-item.component';
 import { OrderItemComponent } from './Components/admin/order-item/order-item.component';
 import { AuthInterceptor } from './Service/AuthInterceptor';
-import {ChangePasswordComponent} from './Components/admin/cp/cp.component'
+import {ChangePasswordComponent} from './Components/admin/cp/cp.component';
 
 const appRoutes:Routes=[
   { path: '',

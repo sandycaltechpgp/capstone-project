@@ -21,4 +21,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 	@Query("from Product where productname like %?1%")
 	List<Product> search(String search);
+
+	@Query("from Product where catid=?1")
+	List<Product> searchByCatid(int catid);
+
 }

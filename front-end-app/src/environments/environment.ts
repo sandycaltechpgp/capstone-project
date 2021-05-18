@@ -22,7 +22,9 @@ export const environment = {
   placeOrderUrl : "/user/placeOrder",
   logoutUrl : "/home/logout",
   changeCPUrl:"/home/changePassword",
-  sproductsUrl : "/user/getSearchProducts"
+  sproductsUrl : "/user/getSearchProducts",
+  productsCatUrl: "/user/getProductCategories",
+  productsCatSearchUrl:"/user/getSearchProductsByCat"
 };
 
 /*

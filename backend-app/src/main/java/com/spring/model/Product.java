@@ -13,77 +13,88 @@ import javax.persistence.Table;
 @Table(name = "Product")
 public class Product implements Serializable {
 
-	private static final long serialVersionUID = -7446162716367847201L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int productid;
-	private String description;
-	private String productname;
-	private double price;
-	private int quantity;
-	@Lob
-	private byte[] productimage;
+    private static final long serialVersionUID = -7446162716367847201L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int productid;
+    private String description;
+    private String productname;
+    private double price;
+    private int quantity;
+    private int catid;
 
-	public int getProductid() {
-		return productid;
-	}
+    @Lob
+    private byte[] productimage;
 
-	public void setProductid(int productid) {
-		this.productid = productid;
-	}
+    public int getProductid() {
+        return productid;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setProductid(int productid) {
+        this.productid = productid;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getProductname() {
-		return productname;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setProductname(String productname) {
-		this.productname = productname;
-	}
+    public String getProductname() {
+        return productname;
+    }
 
-	public double getPrice() {
-		return price;
-	}
+    public void setProductname(String productname) {
+        this.productname = productname;
+    }
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+    public double getPrice() {
+        return price;
+    }
 
-	public int getQuantity() {
-		return quantity;
-	}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+    public int getQuantity() {
+        return quantity;
+    }
 
-	public byte[] getProductimage() {
-		return productimage;
-	}
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-	public void setProductimage(byte[] productimage) {
-		this.productimage = productimage;
-	}
+    public byte[] getProductimage() {
+        return productimage;
+    }
 
-	public Product() {
-		super();
-	}
+    public void setProductimage(byte[] productimage) {
+        this.productimage = productimage;
+    }
 
-	public Product(int productid, String description, String productname, double price, int quantity,
-			byte[] productimage) {
-		super();
-		this.productid = productid;
-		this.description = description;
-		this.productname = productname;
-		this.price = price;
-		this.quantity = quantity;
-		this.productimage = productimage;
-	}
+    public Product() {
+        super();
+    }
+
+    public Product(int productid, String description, String productname, double price, int quantity,
+                   byte[] productimage, int catid) {
+        super();
+        this.productid = productid;
+        this.description = description;
+        this.productname = productname;
+        this.price = price;
+        this.quantity = quantity;
+        this.productimage = productimage;
+        this.catid = catid;
+    }
+
+    public int getCatid() {
+        return catid;
+    }
+
+    public void setCatid(int catid) {
+        this.catid = catid;
+    }
 }

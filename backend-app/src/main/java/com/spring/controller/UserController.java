@@ -1,59 +1,31 @@
 package com.spring.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Logger;
-
+import com.spring.constants.ResponseCode;
+import com.spring.constants.WebConstants;
+import com.spring.exception.*;
+import com.spring.model.*;
+import com.spring.repository.*;
+import com.spring.response.*;
+import com.spring.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.spring.constants.ResponseCode;
-import com.spring.constants.WebConstants;
-import com.spring.exception.AddressCustomException;
-import com.spring.exception.CartCustomException;
-import com.spring.exception.PlaceOrderCustomException;
-import com.spring.exception.ProductCustomException;
-import com.spring.exception.UserCustomException;
-import com.spring.model.Address;
-import com.spring.model.Bufcart;
-import com.spring.model.PlaceOrder;
-import com.spring.model.Product;
-import com.spring.model.User;
-import com.spring.repository.AddressRepository;
-import com.spring.repository.CartRepository;
-import com.spring.repository.OrderRepository;
-import com.spring.repository.ProductRepository;
-import com.spring.repository.UserRepository;
-import com.spring.response.CartResponse;
-import com.spring.response.ProductResponse;
-import com.spring.response.Response;
-import com.spring.response.ServerResponse;
-import com.spring.response.UserResponse;
-import com.spring.util.Validator;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Logger;
 
 @CrossOrigin
 @RestController
@@ -76,8 +48,12 @@ public class UserController {
 
     @Autowired
     private OrderRepository ordRepo;
+
     @Autowired
     ResourceLoader resourceLoader;
+
+    @Autowired
+    ProductCategoryRepository productCategoryRepository;
 
     @PostConstruct
     public void addMasterList() {
@@ -95,10 +71,13 @@ public class UserController {
                 p.setProductname(data[2].trim());
                 p.setPrice(Float.parseFloat(data[3].trim()));
                 p.setQuantity(Integer.parseInt(data[4].trim()));
+
                 Resource fresource = resourceLoader.getResource("classpath:/masterlist/" + data[5].trim());
                 InputStream finputStream = ((ClassPathResource) fresource).getInputStream();
                 byte[] bfdata = FileCopyUtils.copyToByteArray(finputStream);
                 p.setProductimage(bfdata);
+
+                p.setCatid(Integer.parseInt(data[6].trim()));
                 prodRepo.save(p);
             }
 
@@ -107,6 +86,27 @@ public class UserController {
         }
     }
 
+    @PostConstruct
+    public void addCategoriesList() {
+        try {
+            Resource resource = resourceLoader.getResource("classpath:categories.txt");
+            InputStream inputStream = ((ClassPathResource) resource).getInputStream();
+            byte[] bdata = FileCopyUtils.copyToByteArray(inputStream);
+            String tdata = new String(bdata, StandardCharsets.UTF_8);
+            String[] lines = tdata.split("\n");
+            for (int i = 1; i < lines.length; i++) {
+                String line = lines[i];
+                String[] data = line.split(",");
+                ProductCategory cat = new ProductCategory();
+                cat.setProductcatname(data[1].trim());
+                cat.setDescription(data[2].trim());
+                productCategoryRepository.save(cat);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @PostMapping("/addAddress")
     public ResponseEntity<UserResponse> addAddress(@RequestBody Address address, Authentication auth) {
@@ -180,6 +180,33 @@ public class UserController {
         return new ResponseEntity<ProductResponse>(resp, HttpStatus.OK);
     }
 
+    @GetMapping("/getProductCategories")
+    public ResponseEntity<ProductCatResponse> getProductCategories(Authentication auth) throws IOException {
+        ProductCatResponse resp = new ProductCatResponse();
+        try {
+            resp.setStatus(ResponseCode.SUCCESS_CODE);
+            resp.setMessage(ResponseCode.LIST_SUCCESS_MESSAGE);
+            resp.setOblist(productCategoryRepository.findAll());
+        } catch (Exception e) {
+            throw new ProductCustomException("Unable to retrieve products, please try again");
+        }
+        return new ResponseEntity<ProductCatResponse>(resp, HttpStatus.OK);
+    }
+
+    @GetMapping("/getSearchCategories")
+    public ResponseEntity<ProductCatResponse> getSearchCategories(@RequestParam String search, Authentication auth) throws IOException {
+        ProductCatResponse resp = new ProductCatResponse();
+        try {
+            resp.setStatus(ResponseCode.SUCCESS_CODE);
+            resp.setMessage(ResponseCode.LIST_SUCCESS_MESSAGE);
+            resp.setOblist(productCategoryRepository.search(search));
+        } catch (Exception e) {
+            throw new ProductCustomException("Unable to retrieve products, please try again");
+        }
+        return new ResponseEntity<ProductCatResponse>(resp, HttpStatus.OK);
+    }
+
+
     @GetMapping("/getSearchProducts")
     public ResponseEntity<ProductResponse> getSearchProducts(@RequestParam String search, Authentication auth) throws IOException {
         System.out.println(search);
@@ -194,6 +221,22 @@ public class UserController {
         return new ResponseEntity<ProductResponse>(resp, HttpStatus.OK);
     }
 
+
+    @GetMapping("/getSearchProductsByCat")
+    public ResponseEntity<ProductResponse> getSearchProductsByCat(@RequestParam String search, Authentication auth) throws IOException {
+        System.out.println(search);
+        ProductResponse resp = new ProductResponse();
+        try {
+            ProductCategory cat = productCategoryRepository.findByProductcatname(search);
+
+            resp.setStatus(ResponseCode.SUCCESS_CODE);
+            resp.setMessage(ResponseCode.LIST_SUCCESS_MESSAGE);
+            resp.setOblist(prodRepo.searchByCatid(cat.getProductcatid()));
+        } catch (Exception e) {
+            throw new ProductCustomException("Unable to retrieve products, please try again");
+        }
+        return new ResponseEntity<ProductResponse>(resp, HttpStatus.OK);
+    }
 
     @GetMapping("/addToCart")
     public ResponseEntity<ServerResponse> addToCart(@RequestParam(WebConstants.PROD_ID) String productId,
