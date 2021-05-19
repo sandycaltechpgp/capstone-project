@@ -5,26 +5,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.spring.model.*;
+import com.spring.repository.ProductCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.constants.ResponseCode;
 import com.spring.constants.WebConstants;
 import com.spring.exception.OrderCustomException;
 import com.spring.exception.ProductCustomException;
-import com.spring.model.PlaceOrder;
-import com.spring.model.Product;
 import com.spring.repository.CartRepository;
 import com.spring.repository.OrderRepository;
 import com.spring.repository.ProductRepository;
@@ -51,13 +44,20 @@ public class AdminController {
     @Autowired
     private JmsTemplate jmsTemplate;
 
+    @Autowired
+    private ProductCategoryRepository productCategoryRepository;
+
+
     @PostMapping("/addProduct")
     public ResponseEntity<ProductResponse> addProduct(
             @RequestParam(name = WebConstants.PROD_FILE, required = false) MultipartFile prodImage,
             @RequestParam(name = WebConstants.PROD_DESC) String description,
             @RequestParam(name = WebConstants.PROD_PRICE) String price,
             @RequestParam(name = WebConstants.PROD_NAME) String productname,
-            @RequestParam(name = WebConstants.PROD_QUANITY) String quantity) throws IOException {
+            @RequestParam(name = WebConstants.PROD_QUANITY) String quantity, @RequestParam(name = WebConstants.CATEGORY) String catid) throws IOException {
+
+        System.out.println(" ------ " + catid);
+
         ProductResponse resp = new ProductResponse();
         if (Validator.isStringEmpty(productname) || Validator.isStringEmpty(description)
                 || Validator.isStringEmpty(price) || Validator.isStringEmpty(quantity)) {
@@ -74,12 +74,15 @@ public class AdminController {
                 if (prodImage != null) {
                     prod.setProductimage(prodImage.getBytes());
                 }
+                prod.setCatid(Integer.parseInt(catid));
                 prodRepo.save(prod);
-                jmsTemplate.convertAndSend("product_queue", prod);
+
+                //jmsTemplate.convertAndSend("product_queue", prod);
                 resp.setStatus(ResponseCode.SUCCESS_CODE);
                 resp.setMessage(ResponseCode.ADD_SUCCESS_MESSAGE);
                 resp.setOblist(prodRepo.findAll());
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new ProductCustomException("Unable to save product details, please try again");
             }
         }
@@ -93,7 +96,10 @@ public class AdminController {
             @RequestParam(name = WebConstants.PROD_PRICE) String price,
             @RequestParam(name = WebConstants.PROD_NAME) String productname,
             @RequestParam(name = WebConstants.PROD_QUANITY) String quantity,
-            @RequestParam(name = WebConstants.PROD_ID) String productid, @RequestParam(name = WebConstants.CATEGORY) Integer catid) throws IOException {
+            @RequestParam(name = WebConstants.PROD_ID) String productid, @RequestParam(name = WebConstants.CATEGORY) String catid) throws IOException {
+
+        System.out.println(" ------ " + catid);
+
         ServerResponse resp = new ServerResponse();
         if (Validator.isStringEmpty(productname) || Validator.isStringEmpty(description)
                 || Validator.isStringEmpty(price) || Validator.isStringEmpty(quantity)) {
@@ -104,12 +110,12 @@ public class AdminController {
             try {
                 if (prodImage != null) {
                     Product prod = new Product(Integer.parseInt(productid), description, productname,
-                            Double.parseDouble(price), Integer.parseInt(quantity), prodImage.getBytes(), catid);
+                            Double.parseDouble(price), Integer.parseInt(quantity), prodImage.getBytes(), Integer.parseInt(catid));
                     prodRepo.save(prod);
                 } else {
                     Product prodOrg = prodRepo.findByProductid(Integer.parseInt(productid));
                     Product prod = new Product(Integer.parseInt(productid), description, productname,
-                            Double.parseDouble(price), Integer.parseInt(quantity), prodOrg.getProductimage(), catid);
+                            Double.parseDouble(price), Integer.parseInt(quantity), prodOrg.getProductimage(), Integer.parseInt(catid));
                     prodRepo.save(prod);
                 }
                 resp.setStatus(ResponseCode.SUCCESS_CODE);
@@ -164,6 +170,19 @@ public class AdminController {
         }
 
         return new ResponseEntity<ViewOrderResponse>(resp, HttpStatus.OK);
+    }
+
+
+    @PostMapping(value = "/addCategory")
+    public void addCategory(@RequestBody AddCategory addCategory) {
+
+        ProductCategory cat = productCategoryRepository.findByProductcatname(addCategory.getCategoryName().trim());
+        if (cat == null) {
+            ProductCategory pc = new ProductCategory();
+            pc.setDescription(addCategory.getCategoryName());
+            pc.setProductcatname(addCategory.getCategoryName());
+            productCategoryRepository.save(pc);
+        }
     }
 
     @PostMapping("/updateOrder")

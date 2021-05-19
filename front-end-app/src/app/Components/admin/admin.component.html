@@ -20,8 +20,8 @@
             <button class="mybtn btn btn-secondary" (click)="hide()" *ngIf="showAdd">Click to hide</button>
         </div>
     </div>
-    <form class="form-horizontal shadow p-3 mb-5 bg-white rounded " #f="ngForm"
-          (ngSubmit)="f.form.valid && addProd(desc,quan,price,prodname,image)"
+    <form class="form-horizontal shadow p-3 mb-5 bg-white rounded " #f="ngForm" name="addform" id="addform"
+          (ngSubmit)="f.form.valid && addProd(desc,quan,price,prodname,image,category)"
           *ngIf="showAdd">
         <div class="row">
             <div class="col-6">
@@ -41,6 +41,12 @@
                     <input type="text" class="form-control" placeholder="price" name="price" #price
                            ngModel>
                 </div>
+                <div class="form-group">
+                    <select class="selectpicker dropdown" id="category" name="category" #category>
+                        <option  *ngFor="let test of productsCat" [value]="test.productcatid">{{test.productcatname}}</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <input type="file" class="form-control" placeholder="Product Picture" #image
                            accept="image/*" name="image"

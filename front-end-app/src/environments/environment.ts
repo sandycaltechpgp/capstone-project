@@ -24,7 +24,8 @@ export const environment = {
   changeCPUrl:"/home/changePassword",
   sproductsUrl : "/user/getSearchProducts",
   productsCatUrl: "/user/getProductCategories",
-  productsCatSearchUrl:"/user/getSearchProductsByCat"
+  productsCatSearchUrl:"/user/getSearchProductsByCat",
+  addCategoryUrl:"/admin/addCategory"
 };
 
 /*

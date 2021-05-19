@@ -17,6 +17,7 @@ export class AdminComponent implements OnInit {
     fileToUpload: File = null;
     showAdd = false;
     auth: string;
+    cat: string;
 
     constructor(private api: ApiService, private router: Router) {
     }
@@ -39,6 +40,9 @@ export class AdminComponent implements OnInit {
             );
         }
     }
+
+
+
 
     handleFileInput(file: FileList) {
         this.fileToUpload = file.item(0);
@@ -79,9 +83,22 @@ export class AdminComponent implements OnInit {
         return false;
     }
 
+    catchange(value){
+        console.log('category');
+        console.log(value);
+        this.cat = value;
+    }
 
-    addProd(desc: any, quan: any, price: any, prodname: any, image: any) {
-        this.api.addProduct(desc.value, quan.value, price.value, prodname.value, this.fileToUpload).subscribe(res => {
+
+    addProd(desc: any, quan: any, price: any, prodname: any, image: any,category: any) {
+        category = this.cat;
+        console.log(category);
+
+        var e = document.getElementById("category");
+        category =e.options[e.selectedIndex].value;
+        console.log(category);
+
+        this.api.addProduct(desc.value, quan.value, price.value, prodname.value, this.fileToUpload,category).subscribe(res => {
             this.products = res.oblist;
         });
     }

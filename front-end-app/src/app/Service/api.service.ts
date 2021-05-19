@@ -7,6 +7,7 @@ import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
 import { Address } from '../Model/address';
 import { environment } from 'src/environments/environment';
 import { ChangePassword } from '../Model/changePassword';
+import {AddCategory} from "../Model/AddCategory";
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +75,11 @@ export class ApiService {
     return this.http.post<any>(environment.baseUrl+environment.changeCPUrl, adr);
   }
 
+  addCategory(cat: AddCategory): Observable<any> {
+    return this.http.post<any>(environment.baseUrl+environment.addCategoryUrl, cat);
+  }
+
+
   // fetch address 
   getAddress(): Observable<any> {
     return this.http.get<any>(environment.baseUrl+environment.viewAddressUrl);
@@ -105,20 +111,21 @@ export class ApiService {
 
   // Add product in the system
   addProduct( desc: string,
-    quan: string, price: string, prodname: string, image: File): Observable<any> {
+    quan: string, price: string, prodname: string, image: File,cat:string): Observable<any> {
     const formData: FormData = new FormData();
     formData.append("description", desc);
     formData.append("price", price);
     formData.append("productname", prodname);
     formData.append("quantity", quan);
     formData.append("file", image);
+    formData.append("catid", cat);
     return this.http.post<any>(environment.baseUrl+environment.addProductUrl, formData);
 
   }
   
   // update Product for Logged Admin User
   updateProduct( desc: string,
-    quan: string, price: string, prodname: string, image: File, productid: any): Observable<any> {
+    quan: string, price: string, prodname: string, image: File, productid: any,cat:any): Observable<any> {
     const formData: FormData = new FormData();
     formData.append("description", desc);
     formData.append("price", price);
@@ -126,6 +133,7 @@ export class ApiService {
     formData.append("quantity", quan);
     formData.append("file", image);
     formData.append("productId", productid);
+    formData.append("catid", cat);
     return this.http.put<any>(environment.baseUrl+environment.updateProductUrl, formData);
   }
 
