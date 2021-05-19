@@ -33,6 +33,17 @@ export class HomeComponent implements OnInit {
         }
     }
 
+    openNav() {
+        document.getElementById('mySidenav').style.width = '250px';
+        document.getElementById('main').style.marginLeft = '250px';
+    }
+
+    closeNav() {
+        document.getElementById('mySidenav').style.width = '0';
+        /*document.getElementById('main').style.marginLeft = '0';*/
+        location.replace(location.href.split('#')[0]);
+    }
+
     getSearchResultsByCategory(value) {
         if (this.api.isAuthenticated) {
             this.api.getSearchCategories(value).subscribe(
@@ -41,6 +52,7 @@ export class HomeComponent implements OnInit {
                 }
             );
         }
+        return false;
     }
 
     getSearchResults() {
@@ -49,6 +61,7 @@ export class HomeComponent implements OnInit {
             const value: string = elem.value;
             this.api.getSearchProducts(value).subscribe(
                 res => {
+                    ``
                     this.products = res.oblist;
                 }
             );

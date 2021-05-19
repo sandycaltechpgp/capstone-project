@@ -1,22 +1,25 @@
 <app-navigation></app-navigation>
 
-<div class="container">
-    <div class="column">
-        <H2> Cusines </H2>
+<div id="main" class="container">
+
+    <div id="mySidenav" class="sidenav">
+        <h2> Cusines </h2>
+        <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
         <div *ngFor="let productcat of productsCat">
             <li>
-                <a href="javascript:void(0)" class="closebtn"
+                <a href="/home"
                    (click)='getSearchResultsByCategory(productcat.productcatname)'>{{productcat.productcatname}}</a>
             </li>
         </div>
-        <div class="form-group" align="center">
-
-            <label>Search Items:::</label>
-            <input type="text" class="form-control" name="title" id="search">
-            <button class="btn btn-info btn-sm" (click)="getSearchResults()">Search Item</button>
-        </div>
     </div>
 
+    <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776; Cusines</span>
+
+    <div class="form-group" align="left">
+        <label>Search Items:::</label>
+        <input type="text" class="form-control" name="title" id="search">
+        <button class="btn btn-info btn-sm" (click)="getSearchResults()">Search Item</button>
+    </div>
     <div class="row">
         <div class="col-3 align-left" *ngFor="let product of products">
             <app-product [product]="product" (productAddToCart)="addToCart($event)">Loading...</app-product>
