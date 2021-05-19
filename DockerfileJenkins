@@ -45,4 +45,4 @@ EXPOSE 80 8087
 
 
 WORKDIR /usr/local/lib
-ENTRYPOINT sh -c 'service nginx start && java -jar -Dspring.profiles.active=prodmysql /usr/local/lib/demo.jar '
+ENTRYPOINT sh -c 'service nginx start && nohup java -jar -Dspring.profiles.active=prodmysql /usr/local/lib/demo.jar &'
