@@ -30,6 +30,12 @@ export class HomeComponent implements OnInit {
                     this.productsCat = res.oblist;
                 }
             );
+
+            this.api.getProductsCats().subscribe(
+                res => {
+                    this.productsCat = res.oblist;
+                }
+            );
         }
     }
 
@@ -40,8 +46,7 @@ export class HomeComponent implements OnInit {
 
     closeNav() {
         document.getElementById('mySidenav').style.width = '0';
-        /*document.getElementById('main').style.marginLeft = '0';*/
-        location.replace(location.href.split('#')[0]);
+        return false;
     }
 
     getSearchResultsByCategory(value) {
@@ -61,7 +66,6 @@ export class HomeComponent implements OnInit {
             const value: string = elem.value;
             this.api.getSearchProducts(value).subscribe(
                 res => {
-                    ``
                     this.products = res.oblist;
                 }
             );
