@@ -1,46 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { Address } from 'src/app/Model/address';
-import { ApiService } from 'src/app/Service/api.service';
-import { Router } from '@angular/router';
-import { ChangePassword } from 'src/app/Model/changePassword';
-
+import {Component, OnInit} from '@angular/core';
+import {Address} from 'src/app/Model/address';
+import {ApiService} from 'src/app/Service/api.service';
+import {Router} from '@angular/router';
+import {ChangePassword} from 'src/app/Model/changePassword';
+import {AppComponent} from 'src/app/app.component'
 
 @Component({
-  selector: 'app-cp',
-  templateUrl: './cp.component.html',
-  styleUrls: ['./cp.component.css']
+    selector: 'app-cp',
+    templateUrl: './cp.component.html',
+    styleUrls: ['./cp.component.css']
 })
 export class ChangePasswordComponent implements OnInit {
 
-  private cpForm: any;
-  model: ChangePassword = {
-    oldPassword: '',
-    newPassword: '',
-    rnewPassword: ''
-  };
-  constructor(private api: ApiService, private route: Router) { }
+    private cpForm: any;
+    model: ChangePassword = {
+        oldPassword: '',
+        newPassword: '',
+        rnewPassword: ''
+    };
 
-  ngOnInit() {
-    this.api.getAddress().subscribe(res => {
-      if (res.map != null) {
-        this.model = res.map;
-      }
-    }, err => {
-      console.log(err);
-    });
-  }
-
-  changePassword() {
-    if(this.model.newPassword != this.model.rnewPassword){
-      alert("New Passwords doesnt match ")
-      return 
+    constructor(private api: ApiService, private route: Router, private app: AppComponent) {
     }
 
-    this.api.changePassword(this.model).subscribe(res => {
-      console.log(res);
-      this.route.navigate(['/home']);
-    });
-  }
+    ngOnInit() {
+        this.api.getAddress().subscribe(res => {
+            if (res.map != null) {
+                this.model = res.map;
+            }
+        }, err => {
+            console.log(err);
+        });
+    }
 
-  
+    changePassword() {
+        if (this.model.newPassword != this.model.rnewPassword) {
+            alert('New Passwords doesnt match ');
+            return;
+        }
+
+        this.api.changePassword(this.model).subscribe(res => {
+            console.log(res);
+        });
+
+        this.app.home();
+    }
+
+
 }

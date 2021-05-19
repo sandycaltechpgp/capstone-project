@@ -17,7 +17,7 @@ export class EditItemComponent implements OnInit {
         productname: '',
         quantity: 0,
         productimage: null,
-        category: ''
+        category: 0
     };
 
     productsCat: Productcat[] = [];
@@ -27,7 +27,6 @@ export class EditItemComponent implements OnInit {
     auth: string;
     prodid: string;
     imageUrl: string = "/assets/img/noimage.png";
-    cat: string;
 
     constructor(private route: ActivatedRoute, private api: ApiService) {
         if (this.api.isAuthenticated) {
@@ -68,18 +67,19 @@ export class EditItemComponent implements OnInit {
     }
 
 
-    updateProd(desc: any, quan: any, price: any, prodname: any, image: any, cat: any) {
-        cat = this.cat;
-        console.log(cat);
+    updateProd(desc: any, quan: any, price: any, prodname: any, image: any, cat:any) {
 
-        var e = document.getElementById("category");
+        const e = (document.getElementById('category')) as HTMLSelectElement;
         cat = e.options[e.selectedIndex].value;
         console.log(cat);
 
-        console.log(this.product.productid)
+        console.log(this.product.productid);
+
         this.api.updateProduct(desc.value, quan.value, price.value, prodname.value, this.fileToUpload, this.product.productid, cat).subscribe(res => {
             console.log(res);
         });
+
+        document.location.href='/admin';
     }
 
 }

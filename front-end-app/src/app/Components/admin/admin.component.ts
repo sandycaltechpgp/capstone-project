@@ -94,13 +94,15 @@ export class AdminComponent implements OnInit {
         category = this.cat;
         console.log(category);
 
-        var e = document.getElementById("category");
-        category =e.options[e.selectedIndex].value;
+        const e = (document.getElementById('category')) as HTMLSelectElement;
+        category = e.options[e.selectedIndex].value;
         console.log(category);
 
         this.api.addProduct(desc.value, quan.value, price.value, prodname.value, this.fileToUpload,category).subscribe(res => {
             this.products = res.oblist;
         });
+
+        document.location.href='/admin';
     }
 
     delProd(prodid: any) {

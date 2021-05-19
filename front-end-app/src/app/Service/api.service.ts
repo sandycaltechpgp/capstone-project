@@ -111,7 +111,7 @@ export class ApiService {
 
   // Add product in the system
   addProduct( desc: string,
-    quan: string, price: string, prodname: string, image: File,cat:string): Observable<any> {
+    quan: string, price: string, prodname: string, image: File, cat: any): Observable<any> {
     const formData: FormData = new FormData();
     formData.append("description", desc);
     formData.append("price", price);
