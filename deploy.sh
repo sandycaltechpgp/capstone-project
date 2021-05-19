@@ -3,7 +3,7 @@
 node {
 
     stage('1') {
-	sh "cd /var/lib/jenkins/workspace/CapstoneProject/capstone-project"
+	sh "cd capstone-project"
     }
 
     stage('2') {
