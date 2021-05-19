@@ -4,7 +4,7 @@ node {
 
 
     stage('2') {
-	sh "sudo docker build -t myimage:latest -< /var/lib/jenkins/workspace/CapstoneProject/capstone-project/DockerfileJenkins"
+	sh "sudo docker build -t myimage:latest -< /var/lib/jenkins/workspace/CapstoneProject@script/DockerfileJenkins"
     }
 
     stage('3') {
