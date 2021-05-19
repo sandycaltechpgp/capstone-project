@@ -32,6 +32,8 @@ RUN mvn clean install -DskipTests
 RUN cp -R /home/be/target/*.jar /usr/local/lib/demo.jar
 
 
+RUN rm -rf  /home/fe/dist/shopping-app/  
+
 WORKDIR /home/fe
 RUN npm install
 RUN npm run ng build --configuration=docker  --verbose --progress=true
