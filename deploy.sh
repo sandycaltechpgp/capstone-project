@@ -1,6 +1,19 @@
 
-cd /var/lib/jenkins/workspace/CapstoneProject/capstone-project
 
-sudo docker build -t myimage:latest -< DockerfileJenkins
+node {
 
-sudo docker run -p80:80 -p8087:8087 myimage:latest
+    stage('1') {
+	sh "cd /var/lib/jenkins/workspace/CapstoneProject/capstone-project"
+    }
+
+    stage('2') {
+	sh "sudo docker build -t myimage:latest -< DockerfileJenkins"
+    }
+
+    stage('3') {
+	sh "sudo docker run -p80:80 -p8087:8087 myimage:latest"
+    }
+
+}
+
+
