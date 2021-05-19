@@ -7,12 +7,15 @@ Project Objective:
 Create a dynamic and responsive online food delivery web application for ordering food items of different cuisines from a restaurant.
 
 Contains an Admin and an User portal.
+When you login with Admin user you will be redirected to Admin Portal.
+When you login with Non-Admin user you will be redirecterd to the End User Portal.
 
 Admin Portal Features:
 1. Signup/SignIn
 2. Add and Remove Cuisines 
 3. Add and Remove Food Items 
 4. Edit/Enable/Disable Food Items
+5. Change Password
 
 User Portal Features:
 1. SignUp/SignIn
@@ -21,6 +24,7 @@ User Portal Features:
 4. Apply Filters on Search Results.
 5. Add selected items to cart and customise order.
 6. Pay for the order and receive an order summary.
+7. Change Password
 
 ======================================================================================================================================================
 
